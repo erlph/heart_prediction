@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Heart Disease Prediction</title>
+    <style>
+        .slider {
+          width: 300px;
+        }
+      </style>
+</head>
+<body>
+  <p>Disclaimer: The following health prediction study may not be medically 
+    accurate and in no way should be taken as a medical advice. 
+    The values and infographics below are only for individual study purposes.
+
+      <br><br>
+    The scenario: Cardiovascular systems of humans play an essential role 
+    in general health. That is why many scientists have been closely 
+    studying what affects the health of a hearth. For that reason, 
+    we are going to use some variables that reflect individuals' 
+    lifestyle and predict the risks of them on one's cardiovascular system. 
+    That way we can present a more accurate information to those 
+    who would like to improve their health.</p>
+
+    <h2>Please enter your respective values</h2>
+
+
+    <form id="mlForm" action="/predict" method="post">
+
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender">
+          <option value="0">Female</option>
+          <option value="1">Male</option>
+        </select>
+        <br>
+    
+        <label for="age">Age:</label><br>
+        <input type="range" id="age" name="age" min="0" max="100" value="50" step="1" class="slider">
+        <span id="ageValue">50</span>
+        <br>
+    
+        <label for="height">Height:</label><br>
+        <input type="range" id="height" name="height" min="150" max="200" value="175" step="1" class="slider">
+        <span id="heightValue">175</span>
+        <br>
+    
+        <label for="weight">Weight:</label><br>
+        <input type="range" id="weight" name="weight" min="50" max="110" value="80" step="1" class="slider">
+        <span id="weightValue">80</span>
+        <br>
+    
+        <label for="hi">Systolic Blood Pressure: (Do not enter a value if you don't know)</label><br>
+        <input type="range" id="hi" name="hi" min="100" max="170" value="120" step="1" class="slider">
+        <span id="hiValue">120</span>
+        <br>
+    
+        <label for="lo">Diastolic Blood Pressure: (Do not enter a value if you don't know)</label><br>
+        <input type="range" id="lo" name="lo" min="60" max="100" value="80" step="1" class="slider">
+        <span id="loValue">80</span>
+        <br>
+    
+        <label for="cholesterol">Cholesterol Level: (Do not enter a value if you don't know)</label><br>
+        <select id="cholesterol" name="cholesterol">
+          <option value="1">Normal</option>
+          <option value="2">Above Normal</option>
+          <option value="3">Well Above Normal</option>
+        </select>
+        <br>
+    
+        <label for="glucogen">Glucose: (Do not enter a value if you don't know)</label><br>
+    <select id="glucogen" name="glucogen">
+      <option value="1">Normal</option>
+      <option value="2">Above Normal</option>
+      <option value="3">Well Above Normal</option>
+    </select>
+    <br>
+
+      
+        <label for="smoke">Smoke:</label><br>
+        <select id="smoke" name="smoke">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        <br>
+    
+        <label for="alcohol">Alcohol Intake:</label><br>
+        <select id="alcohol" name="alcohol">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        <br>
+    
+        <label for="activity">Physical Activity:</label><br>
+        <select id="activity" name="activity">
+          <option value="0">Inactive</option>
+          <option value="1">Active</option>
+        </select>
+        <br>
+    
+        <input type="submit" value="Submit">
+        <input type="button" value="Reset" onclick="resetForm()">
+      </form>
+
+      <h2>Prediction Result</h2>
+      <p id="predictionResult"></p>
+    
+      <script>
+        var ageSlider = document.getElementById("age");
+        var ageValue = document.getElementById("ageValue");
+    
+        var heightSlider = document.getElementById("height");
+        var heightValue = document.getElementById("heightValue");
+    
+        var weightSlider = document.getElementById("weight");
+        var weightValue = document.getElementById("weightValue");
+    
+        var hiSlider = document.getElementById("hi");
+        var hiValue = document.getElementById("hiValue");
+    
+        var loSlider = document.getElementById("lo");
+        var loValue = document.getElementById("loValue");
+    
+        
+    
+        // Display the initial values of the sliders
+        ageValue.innerHTML = ageSlider.value;
+        heightValue.innerHTML = heightSlider.value;
+        weightValue.innerHTML = weightSlider.value;
+        hiValue.innerHTML = hiSlider.value;
+        loValue.innerHTML = loSlider.value;
+        
+    
+        // Update the values displayed beside the sliders when the sliders' values change
+        ageSlider.oninput = function() {
+          ageValue.innerHTML = this.value;
+        };
+    
+        heightSlider.oninput = function() {
+          heightValue.innerHTML = this.value;
+        };
+    
+        weightSlider.oninput = function() {
+          weightValue.innerHTML = this.value;
+        };
+    
+        hiSlider.oninput = function() {
+          hiValue.innerHTML = this.value;
+        };
+    
+        loSlider.oninput = function() {
+          loValue.innerHTML = this.value;
+        };
+    
+        
+
+        var predictionResult = document.getElementById("predictionResult");
+        predictionResult.innerHTML = "{{ prediction }}" || "";
+
+        // Clear the prediction result after displaying it
+      predictionResult.addEventListener("animationend", function() {
+      predictionResult.innerHTML = "";
+    });
+
+    function resetForm() {
+      document.getElementById("mlForm").reset();
+      document.getElementById("predictionResult").innerHTML = "";
+    }
+      </script>
+</body>
+</html>
